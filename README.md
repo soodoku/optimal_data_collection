@@ -10,3 +10,7 @@
 
     Let's say that we are interested in estimating the population mean within a particular error bound. Let's assume that there are two strata in the population: $a$ and $b$. Let's assume that the proportion of a in the population is $w_a$ and the proportion of $b$ is $1 - w_a$. The corresponding standard deviation for $a$ and $b$ is $s_a$ and $s_b$.
 
+
+### Authors
+
+Ken Cor and Gaurav Sood
