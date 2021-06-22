@@ -28,8 +28,3 @@ naive_strata_chooser(.6, .24, .21, 625, 387)
 naive_strata_chooser(.6, .24, .21, 639, 673)
 # [1] "choose from group a"
 
-# Optimal Allocation Strata Chooser
-
-
-# Optimal Allocation Formula
-optimize(function(na, nb) {na + nb}, )
