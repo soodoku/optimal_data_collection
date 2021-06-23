@@ -10,6 +10,14 @@
 
     Let's say that we are interested in estimating the population mean within a particular error bound. Let's assume that there are two strata in the population: $a$ and $b$. Let's assume that the proportion of a in the population is $w_a$ and the proportion of $b$ is $1 - w_a$. The corresponding standard deviation for $a$ and $b$ is $s_a$ and $s_b$.
 
+    $se = \sqrt(\frac{wa^2*vara}{na} + \frac{(1-wa)^2*varb}{nb})$
+
+    $na = \frac{n*wa*\sqrt{vara}}{wa*\sqrt{vara} + (1 - wa)*\sqrt{varb}}$
+
+    $nb = \frac{n*wb*\sqrt{varb}}{wa*\sqrt{vara} + (1 - wa)*\sqrt{varb}}$
+
+    $n  = \frac{wa^2*vara + 2*wa*(1 - wa)*sqrt(vara*varb) + (1 - wa)^2*varb}{se^2}$
+
     * [Script](scripts/smallest_n_for_se.R)
 
 

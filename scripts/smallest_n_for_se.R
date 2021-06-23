@@ -43,3 +43,27 @@ res1$solution
 
 # Assume that the optimal allocation formula is known
 # Solve for n and use optimal allocation for na/nb
+
+optimal_n_plus_allocation <- function(wa, vara, varb, se){
+ 
+ n = (wa^2*vara + 2*wa*(1 - wa)*sqrt(vara*varb) + (1 - wa)^2*varb)/se^2
+ ns <- optimal_allocation(wa, vara, varb, n)
+
+ return(c(n = round(n, 0), na = round(ns[1], 0), nb = round(ns[2], 0)))
+}
+
+optimal_n_plus_allocation(.6, .24, .21, .015)
+
+## Benefit of Using Optimal Allocation Rules
+## wa = .8
+## vara = .25; pa = .5
+## varb = .16; pb = .8
+## SRS: pop_mean of .8*.5 + .2*.8 = .56
+   
+# sqrt(p(1 -p)/n) = .015
+# n = p*(1- p)/.015^2 = 1095
+
+# optimal_n_plus_allocation(.8, .25, .16, .015)
+#   n   na   nb 
+#1024  853  171 
+

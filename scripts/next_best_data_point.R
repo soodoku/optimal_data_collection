@@ -28,3 +28,13 @@ naive_strata_chooser(.6, .24, .21, 625, 387)
 naive_strata_chooser(.6, .24, .21, 639, 673)
 # [1] "choose from group a"
 
+# 
+analytical_strata_chooser <- function(wa, vara, varb, na, nb, addl_n){
+ 
+ ns  <- optimal_allocation(wa, vara, varb, na + nb)
+ nps <- optimal_allocation(wa, vara, varb, na + nb + addl_n)
+
+ return(nps - ns)
+}
+
+analytical_strata_chooser(.6, .24, .21, 623, 389, addl_n = 10)
