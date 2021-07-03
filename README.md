@@ -10,9 +10,9 @@ $se = \sqrt{\frac{w_a^2*\sigma_a^2}{n_a} + \frac{(1 - w_a)^2*\sigma_b^2}{n_b}}$
 
 $n_a = \frac{n w_a \sqrt{\sigma_a^2}}{w_a \sqrt{\sigma_a^2} + (1 - w_a) \sqrt{\sigma_b^2}}$
 
-$n_b = \frac{n*w_b*\sqrt{\sigma_b^2}}{w_a*\sqrt{\sigma_a^2} + (1 - w_a)*\sqrt{\sigma_b^2}}$
+$n_b = \frac{n w_b \sqrt{\sigma_b^2}}{w_a \sqrt{\sigma_a^2} + (1 - w_a) \sqrt{\sigma_b^2}}$
 
-$n  = \frac{w_a^2*\sigma_a^2 + 2*wa*(1 - w_a)*sqrt(\sigma_a^2*\sigma_b^2) + (1 - wa)^2*\sigma_b^2}{se^2}$
+$n  = \frac{w_a^2 \sigma_a^2 + 2 wa (1 - w_a) \sqrt(\sigma_a^2 \sigma_b^2) + (1 - wa)^2 \sigma_b^2}{se^2}$
 
 * [Script](scripts/smallest_n_for_se.R) has three functions for the 2-group case:
     - What is the optimal size of $n_a$ and $n_b$ when the variances, $w_a$, and $n$ are known?
