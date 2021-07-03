@@ -38,6 +38,15 @@ In a realistic example, we find the Benefit of using optimal allocation over sim
 #1024  853  171 
 ```
 
+**Future Work**
+
+Above, we solve a simple version of the problem. The simplicity comes at the cost of realism. A more realistic version of the problem may be as follows:
+
+1. We want to estimate the mean of X at time t. 
+2. We know strata proportions and historic strata variances (before time t).
+
+We design a sampling strategy for 1 given 2. But as new data comes in, we find that the new data differs `substantially' from the old data. How do we dynamically adapt to a sampling scheme that takes less and less account of the historical strata variances and gets the sampling scheme closer to stratified random sampling?
+
 ### What's the next best data point to collect when you know the strata and strata variances?
 
 Let's say that once again, we want to measure support for Mr. Obama. Let's assume that we have information about different strata in the population and know the variability of the response in each stratum. Let's say that our objective is to estimate the population mean with the smallest confidence interval. If I could collect only one additional data point, which strata would I sample from? The greater reduction in error will come from collecting data from the stratum where the responses are the most unpredictable, pro-rated by how big the stratum is.
