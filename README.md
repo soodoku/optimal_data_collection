@@ -4,20 +4,20 @@ What's the least amount of data you need to collect to estimate a parameter with
 
 ### What's the least amount of data we need to collect (and how) to estimate mean with a particular s.e. when we know the strata and strata variances?
 
-Let's say that we are interested in estimating the population mean within a particular error bound. Let's assume that there are two strata in the population: $a$ and $b$. Let's assume that the proportion of a in the population is $w_a$ and the proportion of $b$ is $1 - w_a$. The corresponding standard deviation for $a$ and $b$ is $\sigma_a$ and $\sigma_b$. And let's assume that the sample size of the groups is denoted by $n_a$ and $n_b$. Derivation of the analytical formula (skipping over the algebra):
+Let's say that we are interested in estimating the population mean (x) within a particular error bound. Let's assume that there are two strata in the population: $a$ and $b$. Let's assume that the proportion of a in the population is $w_a$ and the proportion of $b$ is $1 - w_a$. The corresponding standard deviation for $a$ and $b$ is $\sigma_a$ and $\sigma_b$. And let's assume that the sample size of the groups is denoted by $n_a$ and $n_b$. Let $\sigma_{\bar{x}} denote the s.e. of $\bar{x}$, our estimand. Derivation of the analytical formula (skipping over the algebra):
 
-$se = \sqrt{\frac{w_a^2*\sigma_a^2}{n_a} + \frac{(1 - w_a)^2*\sigma_b^2}{n_b}}$
+$\sigma_{\bar{x}} = \sqrt{\frac{w_a^2*\sigma_a^2}{n_a} + \frac{(1 - w_a)^2*\sigma_b^2}{n_b}}$
 
 $n_a = \frac{n w_a \sqrt{\sigma_a^2}}{w_a \sqrt{\sigma_a^2} + (1 - w_a) \sqrt{\sigma_b^2}}$
 
 $n_b = \frac{n w_b \sqrt{\sigma_b^2}}{w_a \sqrt{\sigma_a^2} + (1 - w_a) \sqrt{\sigma_b^2}}$
 
-$n  = \frac{w_a^2 \sigma_a^2 + 2 w_a (1 - w_a) \sqrt{\sigma_a^2 \sigma_b^2} + (1 - w_a)^2 \sigma_b^2}{se^2}$
+$n  = \frac{w_a^2 \sigma_a^2 + 2 w_a (1 - w_a) \sqrt{\sigma_a^2 \sigma_b^2} + (1 - w_a)^2 \sigma_b^2}{\sigma_{\bar{x}}^2}$
 
 * [Script](scripts/smallest_n_for_se.R) has three functions for the 2-group case:
     - What is the optimal size of $n_a$ and $n_b$ when the variances, $w_a$, and $n$ are known?
-    - What is the optimal size of $n$, $n_a$, and $n_b$ when se, $\sigma_a^2, \sigma_b^2, w_a$ are known (using constrained optimization)?
-    -  What is the optimal size of $n$, $n_a$, and $n_b$ when se, $\sigma_a^2, \sigma_b^2, w_a$ are known (using the analytical formula)?
+    - What is the optimal size of $n$, $n_a$, and $n_b$ when $\sigma_{\bar{x}}, \sigma_a^2, \sigma_b^2, w_a$ are known (using constrained optimization)?
+    -  What is the optimal size of $n$, $n_a$, and $n_b$ when $\sigma_{\bar{x}}, \sigma_a^2, \sigma_b^2, w_a$ are known (using the analytical formula)?
 
 **The benefit of using optimal allocation**
 
