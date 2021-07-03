@@ -1,4 +1,5 @@
 # Optimal Allocation
+# When wa, vara, varb, and n are known, what is the optimal allocation across groups?
 
 optimal_allocation <- function(wa, vara, varb, n) {
 
