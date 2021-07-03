@@ -19,7 +19,7 @@ $n  = \frac{w_a^2 \sigma_a^2 + 2 w_a (1 - w_a) \sqrt{\sigma_a^2 \sigma_b^2} + (1
     - What is the optimal size of $n$, $n_a$, and $n_b$ when se, $\sigma_a^2, \sigma_b^2, w_a$ are known (using constrained optimization)?
     -  What is the optimal size of $n$, $n_a$, and $n_b$ when se, $\sigma_a^2, \sigma_b^2, w_a$ are known (using the analytical formula)?
 
-** Benefit of using optimal allocation**
+**The benefit of using optimal allocation**
 
 In a realistic example, we find the Benefit of using optimal allocation over simple random sampling is 6.4%. 
 
