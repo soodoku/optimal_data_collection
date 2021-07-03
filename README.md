@@ -4,7 +4,7 @@ What's the least amount of data you need to collect to estimate a parameter with
 
 ### What's the least amount of data we need to collect (and how) to estimate mean with a particular s.e. when we know the strata and strata variances?
 
-Let's say that we are interested in estimating the population mean (x) within a particular error bound. Let's assume that there are two strata in the population: $a$ and $b$. Let's assume that the proportion of a in the population is $w_a$ and the proportion of $b$ is $1 - w_a$. The corresponding standard deviation for $a$ and $b$ is $\sigma_a$ and $\sigma_b$. And let's assume that the sample size of the groups is denoted by $n_a$ and $n_b$. Let $\sigma_{\bar{x}} denote the s.e. of $\bar{x}$, our estimand. Derivation of the analytical formula (skipping over the algebra):
+Let's say that we are interested in estimating the population mean (x) within a particular error bound. Let's assume that there are two strata in the population: $a$ and $b$. Let's assume that the proportion of a in the population is $w_a$ and the proportion of $b$ is $1 - w_a$. The corresponding standard deviation for $a$ and $b$ is $\sigma_a$ and $\sigma_b$. And let's assume that the sample size of the groups is denoted by $n_a$ and $n_b$. Let $\sigma_{\bar{x}}$ denote the s.e. of $\bar{x}$, our estimand. Derivation of the analytical formula (skipping over the algebra):
 
 $\sigma_{\bar{x}} = \sqrt{\frac{w_a^2*\sigma_a^2}{n_a} + \frac{(1 - w_a)^2*\sigma_b^2}{n_b}}$
 
