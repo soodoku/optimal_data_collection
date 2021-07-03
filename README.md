@@ -8,7 +8,7 @@ Let's say that we are interested in estimating the population mean within a part
 
 $se = \sqrt{\frac{w_a^2*\sigma_a^2}{n_a} + \frac{(1 - w_a)^2*\sigma_b^2}{n_b}}$
 
-$n_a = \frac{n*w_a*\sqrt{\sigma_a^2}}{w_a*\sqrt{\sigma_a^2} + (1 - w_a)*\sqrt{\sigma_b^2}}$
+$n_a = \frac{n w_a \sqrt{\sigma_a^2}}{w_a \sqrt{\sigma_a^2} + (1 - w_a) \sqrt{\sigma_b^2}}$
 
 $n_b = \frac{n*w_b*\sqrt{\sigma_b^2}}{w_a*\sqrt{\sigma_a^2} + (1 - w_a)*\sqrt{\sigma_b^2}}$
 
