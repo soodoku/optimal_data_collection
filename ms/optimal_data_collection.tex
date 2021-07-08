@@ -1,0 +1,155 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[titletoc,title]{appendix}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage{caption}
+\newcommand\fnote[1]{\captionsetup{font=small}\caption*{#1}}
+\usepackage{float}
+
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\definecolor{dark-red}{rgb}{0.75,0.10,0.10} 
+\usepackage[margin=1in]{geometry}
+\usepackage[linkcolor=blue,
+            colorlinks=true,
+            urlcolor=blue,
+            pdfstartview={XYZ null null 1.00},
+            pdfpagemode=UseNone,
+            citecolor={blue},
+            pdftitle={Optimal Sequence}]{hyperref}
+
+\usepackage{multibib}
+\usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
+\geometry{letterpaper}               % This is 8.5x11 paper. Options are a4paper or a5paper or other... 
+\usepackage{graphicx}                % Handles inclusion of major graphics formats and allows use of 
+\usepackage{amsfonts,amssymb,amsbsy}
+\usepackage{amsxtra}
+\usepackage{natbib}
+
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{verbatim}
+\setcitestyle{round,semicolon,aysep={},yysep={;}}
+\usepackage{setspace}             % Permits line spacing control. Options are \doublespacing, \onehalfspace
+\usepackage{sectsty}             % Permits control of section header styles
+\usepackage{lscape}
+\usepackage{fancyhdr}             % Permits header customization. See header section below.
+\usepackage{url}                 % Correctly formats URLs with the \url{} tag
+\usepackage{fullpage}             %1-inch margins
+\usepackage{multirow}
+\usepackage{rotating}
+\setlength{\parindent}{3em}
+\usepackage{subcaption}
+\usepackage[T1]{fontenc}
+\usepackage{bm}
+\usepackage{libertine}
+\usepackage{color}
+\usepackage{listings}
+\lstset{ %
+language=R,                % choose the language of the code
+basicstyle=\footnotesize,       % the size of the fonts that are used for the code
+numbers=left,                   % where to put the line-numbers
+numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
+stepnumber=1,                   % the step between two line-numbers. If it is 1 each line will be numbered
+numbersep=5pt,                  % how far the line-numbers are from the code
+backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,                 % show tabs within strings adding particular underscores
+frame=single,           % adds a frame around the code
+tabsize=2,          % sets default tabsize to 2 spaces
+captionpos=b,           % sets the caption-position to bottom
+breaklines=true,        % sets automatic line breaking
+breakatwhitespace=false,    % sets if automatic breaks should only happen at whitespace
+escapeinside={\%*}{*)}          % if you want to add a comment within your code
+}
+\usepackage{chngcntr}
+
+\title{\Large{Optimal Data Collection When Strata and\\ Strata Variances Are Known}\footnote{All the code for the note is posted on \href{https://github.com/soodoku/optimal\_data\_collection/scripts/smallest\_n\_for\_se.R}{Github}}}
+\author{Ken Cor\thanks{Ken can be reached at \href{mailto:mcor@ualberta.ca}{\footnotesize{\texttt{mcor@ualberta.ca}}}} \and Gaurav Sood\thanks{Gaurav can be reached at: \href{mailto:gsood07@gmail.com}{\footnotesize{\texttt{gsood07@gmail.com}}}}\vspace{.5cm}}
+
+\date{\vspace{.5cm}\normalsize{\today}}
+
+\begin{document}
+\maketitle
+
+\begin{comment}
+
+setwd(paste0(githubdir, "optimal_data_collection/ms/"))
+tools::texi2dvi("optimal_data_collection.tex", pdf = TRUE, clean = TRUE) 
+setwd(githubdir)
+
+\end{comment}
+
+\doublespacing
+What's the least amount of data you need to collect to estimate the population mean with a particular standard error? For the simplest case---estimating the mean of a binomial variable using simple random sampling, a conservative estimate of the variance ($p = .5$), and a $\pm3\%$ confidence interval---the answer ($n \sim 1,000$) is well known. The simplest case, however, assumes little to no information. Often, we know more. In opinion polling, we generally know sociodemographic strata in the population. And we have historical data on the variability in strata. Take, for instance, measuring support for Mr. Obama. A polling company like YouGov will usually have a long time series, including information about respondent characteristics. Using this data, the company could derive how variable the support for Mr. Obama is among different sociodemographic groups. With information about strata and strata variances, we can often poll fewer people (vis-a-vis random sampling) to estimate the population mean with a particular s.e. In this note, we show how.
+
+Let's say that we are interested in estimating the population mean ($x$) within a particular error bound. Let's assume that there are two strata in the population: $a$ and $b$. Let's say that the proportion of $a$ in the population is $w_a$ and the proportion of $b$ is $1 - w_a$. The corresponding standard deviation for $a$ and $b$ is $\sigma_a$ and $\sigma_b$. And let $n_a$ and $n_b$ denote the sample size of groups $a$ and $b$ and let $n$ denote the total sample size. Finally, let $\sigma_{\bar{x}}$ denote the s.e. of $\bar{x}$, our estimand. 
+
+The s.e. of the mean is given by equation \ref{eq:se}:
+
+\begin{align}\label{eq:se}
+\sigma_{\bar{x}} = \sqrt{\frac{w_a^2*\sigma_a^2}{n_a} + \frac{(1 - w_a)^2*\sigma_b^2}{n_b}}
+\end{align}
+
+If the $n$, $\sigma_a$, $\sigma_b$, and $w_a$ are known, the formula for optimal allocation across strata is well known. The intuition behind the formula is straightforward---allocation depends on how large the proportion of the population a strata is and how variable it is. The formulas for $n_a$ and $n_b$ are given by equations \ref{eq:na} and \ref{eq:nb} respectively.
+
+\begin{align}\label{eq:na}
+n_a = \frac{n w_a \sqrt{\sigma_a^2}}{w_a \sqrt{\sigma_a^2} + (1 - w_a) \sqrt{\sigma_b^2}}
+\end{align}
+\begin{align}\label{eq:nb}
+n_b = \frac{n w_b \sqrt{\sigma_b^2}}{w_a \sqrt{\sigma_a^2} + (1 - w_a) \sqrt{\sigma_b^2}}
+\end{align}
+
+Doing a bit of algebra using equations \ref{eq:se}, \ref{eq:na}, and \ref{eq:nb} allows us to express $n$ as a function of $w_a$, $\sigma_a$, $\sigma_b$, $\sigma_{\bar{x}}$ (see equation \ref{eq:n}):
+
+\begin{align}\label{eq:n}
+n  = \frac{w_a^2 \sigma_a^2 + 2 w_a (1 - w_a) \sqrt{\sigma_a^2 \sigma_b^2} + (1 - w_a)^2 \sigma_b^2}{\sigma_{\bar{x}}^2}
+\end{align}\label{eq:n}
+
+We provide a \href{https://github.com/soodoku/optimal\_data\_collection/scripts/smallest\_n\_for\_se.R}{script} that allows users to calculate $n$ given $\sigma_{\bar{x}}, \sigma_a^2, \sigma_b^2, w_a$. The script also includes a function that provides a way to use constrained optimization to solve for the two unknowns ($n$ and proportion of $n_a$ versus $n_b$) without using the optimal allocation formula.
+
+\subsection*{The benefit of using optimal allocation}
+
+In a realistic example, we find the benefit of using optimal allocation over simple random sampling is $6.5\%$ (see code block \ref{lst:benefit}). We assume two groups with $w_a = .8$, $\sigma_a^2 = .25$, and $\sigma_b^2 = .16$. The simple random sampling formula that only uses the population variance would need us to sample 1095 people to get us a mean with a standard error of .015. With our allocation rule, you only need to sample 1024 people. The net benefit is $\frac{(1095 - 1024)}{1095} = .065$.\footnote{We are aware that with a binary variable, the variance and the mean are mechanically linked. And with a normal distribution, we will have a more compelling illustration.}
+\label{code:benefit}
+\begin{lstlisting}[caption={Benefit of Using Optimal Sampling},label={lst:benefit},language=R]
+## Benefit of Using Optimal Allocation Rules
+## wa = .8
+## vara = .25; pa = .5
+## varb = .16; pb = .8
+## SRS: pop_mean of .8*.5 + .2*.8 = .56
+   
+# sqrt(p(1 -p)/n) = .015
+# n = p*(1- p)/.015^2 = 1095
+
+# optimal_n_plus_allocation(.8, .25, .16, .015)
+#   n   na   nb 
+#1024  853  171 
+\end{lstlisting}
+
+\subsection*{What's the next best data point to collect when you know the strata and strata variances?}
+
+You can adapt the equations above to answer a more subtle question---what's the next best data point to collect when you know the strata and strata variances? Let's say that once again, we want to measure support for Mr. Obama. Let's assume that we have information about different strata in the population and know the variability of the response in each stratum. Let's say that our objective is to estimate the population mean with the smallest confidence interval. If I could collect only one additional data point, which strata would I sample from? Once again, the heuristic is that the greater reduction in error will come from collecting data from the stratum where the responses are the most unpredictable, pro-rated by how big the stratum is. As above, we provide a \href{https://github.com/soodoku/optimal\_data\_collection/scripts/next\_best\_data\_point.R}{script} that allows users to calculate the strata from which the next point should come.
+
+\subsection*{Future Work}
+
+In this note, we solved a simple version of the problem. The simplicity comes at the cost of realism. A more realistic version of the problem may be as follows:
+\begin{itemize}
+    \item We want to estimate the mean of $x$ at time $t$. 
+    \item We know strata proportions and historic strata variances (before time $t$).
+\end{itemize}
+
+We design a sampling strategy for 1 given 2. But as new data comes in, we find that the new data differs `substantially' from the old data. How do we dynamically adapt to a sampling scheme that takes less and less account of the historical strata variances and gets the sampling scheme closer to stratified random sampling?
+
+You could also extend the work in other compelling directions. Rather than solve for the smallest $n$ and optimal allocation when calculating the population mean, you could compute the optimal data collection strategy for experiments when heterogeneity in treatment effects by strata is known.
+
+\end{document}
