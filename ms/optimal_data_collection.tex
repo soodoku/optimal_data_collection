@@ -73,7 +73,7 @@ escapeinside={\%*}{*)}          % if you want to add a comment within your code
 }
 \usepackage{chngcntr}
 
-\title{\Large{Optimal Data Collection When Strata and\\ Strata Variances Are Known}\footnote{All the code for the note is posted on \href{https://github.com/soodoku/optimal\_data\_collection/scripts/smallest\_n\_for\_se.R}{Github}}}
+\title{\Large{Optimal Data Collection When Strata and\\ Strata Variances Are Known}\footnote{All the code for the note is posted on \url{https://github.com/soodoku/optimal_data_collection/}}}
 \author{Ken Cor\thanks{Ken can be reached at \href{mailto:mcor@ualberta.ca}{\footnotesize{\texttt{mcor@ualberta.ca}}}} \and Gaurav Sood\thanks{Gaurav can be reached at: \href{mailto:gsood07@gmail.com}{\footnotesize{\texttt{gsood07@gmail.com}}}}\vspace{.5cm}}
 
 \date{\vspace{.5cm}\normalsize{\today}}
@@ -115,7 +115,7 @@ Doing a bit of algebra using equations \ref{eq:se}, \ref{eq:na}, and \ref{eq:nb}
 n  = \frac{w_a^2 \sigma_a^2 + 2 w_a (1 - w_a) \sqrt{\sigma_a^2 \sigma_b^2} + (1 - w_a)^2 \sigma_b^2}{\sigma_{\bar{x}}^2}
 \end{align}\label{eq:n}
 
-We provide a \href{https://github.com/soodoku/optimal\_data\_collection/scripts/smallest\_n\_for\_se.R}{script} that allows users to calculate $n$ given $\sigma_{\bar{x}}, \sigma_a^2, \sigma_b^2, w_a$. The script also includes a function that provides a way to use constrained optimization to solve for the two unknowns ($n$ and proportion of $n_a$ versus $n_b$) without using the optimal allocation formula.
+We provide a \href{https://github.com/soodoku/optimal\_data\_collection/blob/main/scripts/smallest\_n\_for\_se.R}{script} that allows users to calculate $n$ given $\sigma_{\bar{x}}, \sigma_a^2, \sigma_b^2, w_a$. The script also includes a function that provides a way to use constrained optimization to solve for the two unknowns ($n$ and proportion of $n_a$ versus $n_b$) without using the optimal allocation formula.
 
 \subsection*{The benefit of using optimal allocation}
 
@@ -138,7 +138,7 @@ In a realistic example, we find the benefit of using optimal allocation over sim
 
 \subsection*{What's the next best data point to collect when you know the strata and strata variances?}
 
-You can adapt the equations above to answer a more subtle question---what's the next best data point to collect when you know the strata and strata variances? Let's say that once again, we want to measure support for Mr. Obama. Let's assume that we have information about different strata in the population and know the variability of the response in each stratum. Let's say that our objective is to estimate the population mean with the smallest confidence interval. If I could collect only one additional data point, which strata would I sample from? Once again, the heuristic is that the greater reduction in error will come from collecting data from the stratum where the responses are the most unpredictable, pro-rated by how big the stratum is. As above, we provide a \href{https://github.com/soodoku/optimal\_data\_collection/scripts/next\_best\_data\_point.R}{script} that allows users to calculate the strata from which the next point should come.
+You can adapt the equations above to answer a more subtle question---what's the next best data point to collect when you know the strata and strata variances? Let's say that once again, we want to measure support for Mr. Obama. Let's assume that we have information about different strata in the population and know the variability of the response in each stratum. Let's say that our objective is to estimate the population mean with the smallest confidence interval. If I could collect only one additional data point, which strata would I sample from? Once again, the heuristic is that the greater reduction in error will come from collecting data from the stratum where the responses are the most unpredictable, pro-rated by how big the stratum is. As above, we provide a \href{https://github.com/soodoku/optimal\_data\_collection/blob/main/scripts/next\_best\_data\_point.R}{script} that allows users to calculate the strata from which the next point should come.
 
 \subsection*{Future Work}
 
