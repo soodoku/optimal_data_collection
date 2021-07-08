@@ -1,27 +1,12 @@
 ## Optimal Data Collection
 
-What's the least amount of data you need to collect to estimate a parameter with a particular standard error? For the simplest case---estimating the mean of a binomial variable using a simple random sampling, a conservative estimate of variance (p = .5), and a +/- 3% confidence interval---the answer (n $\sim$ 1,000) is well known. Often, however, we know more. In opinion polling, we generally know the sociodemographic strata in the population. And we have historical data on the variability in strata. Take, for instance, measuring support for Mr. Obama. A polling company like YouGov will usually have a long time series, including information about respondent characteristics. And from this data, the company could derive how variable the support for Mr. Obama is among different groups. Using these data, the company may ask--- what're the fewest people it needs to poll for the s.e.? In this note, we answer how to capitalize on such information. 
+What's the least amount of data you need to collect to estimate the population mean with a particular standard error? For the simplest case---estimating the mean of a binomial variable using simple random sampling, a conservative estimate of the variance ($p = .5$), and a $\pm3\%$ confidence interval---the answer ($n \sim 1,000$) is well known. The simplest case, however, assumes little to no information. Often, we know more. In opinion polling, we generally know sociodemographic strata in the population. And we have historical data on the variability in strata. Take, for instance, measuring support for Mr. Obama. A polling company like YouGov will usually have a long time series, including information about respondent characteristics. Using this data, the company could derive how variable the support for Mr. Obama is among different sociodemographic groups. With information about strata and strata variances, we can often poll fewer people (vis-a-vis random sampling) to estimate the population mean with a particular s.e. In this [note (pdf)](https://github.com/soodoku/optimal_data_collection/blob/main/ms/optimal_data_collection.pdf), we show how.
 
-### What's the least amount of data we need to collect (and how) to estimate mean with a particular s.e. when we know the strata and strata variances?
+### Why?
 
-Let's say that we are interested in estimating the population mean (x) within a particular error bound. Let's assume that there are two strata in the population: $a$ and $b$. Let's assume that the proportion of a in the population is $w_a$ and the proportion of $b$ is $1 - w_a$. The corresponding standard deviation for $a$ and $b$ is $\sigma_a$ and $\sigma_b$. And let's assume that the sample size of the groups is denoted by $n_a$ and $n_b$. Let $\sigma_{\bar{x}}$ denote the s.e. of $\bar{x}$, our estimand. Derivation of the analytical formula (skipping over the algebra):
+In a realistic example, we find the benefit of using optimal allocation over simple random sampling is 6.5% (see the code block below). 
 
-$\sigma_{\bar{x}} = \sqrt{\frac{w_a^2*\sigma_a^2}{n_a} + \frac{(1 - w_a)^2*\sigma_b^2}{n_b}}$
-
-$n_a = \frac{n w_a \sqrt{\sigma_a^2}}{w_a \sqrt{\sigma_a^2} + (1 - w_a) \sqrt{\sigma_b^2}}$
-
-$n_b = \frac{n w_b \sqrt{\sigma_b^2}}{w_a \sqrt{\sigma_a^2} + (1 - w_a) \sqrt{\sigma_b^2}}$
-
-$n  = \frac{w_a^2 \sigma_a^2 + 2 w_a (1 - w_a) \sqrt{\sigma_a^2 \sigma_b^2} + (1 - w_a)^2 \sigma_b^2}{\sigma_{\bar{x}}^2}$
-
-* [Script](scripts/smallest_n_for_se.R) has three functions for the 2-group case:
-    - What is the optimal size of $n_a$ and $n_b$ when the variances, $w_a$, and $n$ are known?
-    - What is the optimal size of $n$, $n_a$, and $n_b$ when $\sigma_{\bar{x}}, \sigma_a^2, \sigma_b^2, w_a$ are known (using constrained optimization)?
-    -  What is the optimal size of $n$, $n_a$, and $n_b$ when $\sigma_{\bar{x}}, \sigma_a^2, \sigma_b^2, w_a$ are known (using the analytical formula)?
-
-**The benefit of using optimal allocation**
-
-In a realistic example, we find the Benefit of using optimal allocation over simple random sampling is 6.4%. 
+Assuming two groups $a$ and $b$, and using the notation in the note (see the pdf)---wa denotes the proportion of group $a$ in the population, vara and varb denote the variances of group a and b respectively, and letting p denote sample mean, we find that if you use the simple random sampling formula, you will estimate that you need to sample 1095 people. If you optimally exploit the information about strata and strata variances, you will need to just sample 1024 people.
 
 ```
 ## Benefit of Using Optimal Allocation Rules
@@ -38,20 +23,20 @@ In a realistic example, we find the Benefit of using optimal allocation over sim
 #1024  853  171 
 ```
 
-**Future Work**
+### Manuscript and Scripts
 
-Above, we solve a simple version of the problem. The simplicity comes at the cost of realism. A more realistic version of the problem may be as follows:
+* [Manuscript (pdf)](https://github.com/soodoku/optimal_data_collection/blob/main/ms/optimal_data_collection.pdf)
 
-1. We want to estimate the mean of X at time t. 
-2. We know strata proportions and historic strata variances (before time t).
+* What's the least amount of data we need to collect (and how) to estimate mean with a particular s.e. when we know the strata and strata variances?
 
-We design a sampling strategy for 1 given 2. But as new data comes in, we find that the new data differs `substantially' from the old data. How do we dynamically adapt to a sampling scheme that takes less and less account of the historical strata variances and gets the sampling scheme closer to stratified random sampling?
+    * [Script](scripts/smallest_n_for_se.R) has three functions for the 2-group case:
+        * What is the optimal size of $n_a$ and $n_b$ when the variances, $w_a$, and $n$ are known?
+        * What is the optimal size of $n$, $n_a$, and $n_b$ when $\sigma_{\bar{x}}, \sigma_a^2, \sigma_b^2, w_a$ are known (using constrained optimization)?
+        * What is the optimal size of $n$, $n_a$, and $n_b$ when $\sigma_{\bar{x}}, \sigma_a^2, \sigma_b^2, w_a$ are known (using the analytical formula)?
 
-### What's the next best data point to collect when you know the strata and strata variances?
+* What's the next best data point to collect when you know the strata and strata variances?
 
-Let's say that once again, we want to measure support for Mr. Obama. Let's assume that we have information about different strata in the population and know the variability of the response in each stratum. Let's say that our objective is to estimate the population mean with the smallest confidence interval. If I could collect only one additional data point, which strata would I sample from? The greater reduction in error will come from collecting data from the stratum where the responses are the most unpredictable, pro-rated by how big the stratum is.
-
-* [Script](scripts/next_best_data_point.R)
+    * [Script](scripts/next_best_data_point.R)
 
 ### Authors
 
